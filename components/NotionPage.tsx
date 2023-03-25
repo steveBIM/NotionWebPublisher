@@ -19,8 +19,8 @@ import { getCanonicalPageUrl, mapPageUrl } from '@/lib/map-page-url'
 import { searchNotion } from '@/lib/search-notion'
 import { useDarkMode } from '@/lib/use-dark-mode'
 
+import { Waline } from './Comment'
 import { Footer } from './Footer'
-import { GitHubShareButton } from './GitHubShareButton'
 import { Loading } from './Loading'
 import { NotionPageHeader } from './NotionPageHeader'
 import { Page404 } from './Page404'
@@ -281,7 +281,19 @@ export const NotionPage: React.FC<types.PageProps> = ({
         footer={footer}
       />
 
-      <GitHubShareButton />
+      {block.id.replace(/-/g, '') !== site.rootNotionPageId ?
+        <Waline
+          serverURL='https://waline.imbytecat.com'
+          path={'/' + block.id.replace(/-/g, '')}
+          emoji={[
+            '//cdn.jsdelivr.net/gh/walinejs/emojis@1.1.0/tw-emoji'
+          ]}
+          dark={isDarkMode}
+          meta={['nick', 'mail']}
+          requiredMeta={['nick', 'mail']}
+          imageUploader={false}
+          copyright={false}
+        /> : null}
     </>
   )
 }
